@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    server: https://kubernetes.default.svc
+  source:
+    path: nginx-chart/
+    repoURL: https://github.com/TanmayRao7/nginx-helm.git
+    targetRevision: master
+    helm:
+      values: |
+        replicaCount: 1
+
+        image:
+          repository: nginx
+          tag: "1.21.0"
+          pullPolicy: IfNotPresent
+
+        service:
+          type: ClusterIP
+          port: 80
+
+        custom:
+          homepageText: "Welcome to the Nginx Helm Chart Release Version: 1.10!"
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

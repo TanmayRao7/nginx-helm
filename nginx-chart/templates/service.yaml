@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "nginx-chart.fullname" . }}
+  namespace: {{ .Release.Namespace }}  # Add the namespace
   labels:
     {{- include "nginx-chart.labels" . | nindent 4 }}
 spec:
@@ -11,4 +12,3 @@ spec:
       targetPort: 80
   selector:
     app: {{ include "nginx-chart.name" . }}
-

@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "nginx-chart.fullname" . }}
+  namespace: {{ .Release.Namespace }}  # Add the namespace
   labels:
     {{- include "nginx-chart.labels" . | nindent 4 }}
 spec:
@@ -27,12 +28,12 @@ spec:
         - name: homepage-config
           configMap:
             name: homepage-config
-
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: homepage-config
+  namespace: {{ .Release.Namespace }}  # Add the namespace
 data:
   index.html: |
     <html>
@@ -41,4 +42,3 @@ data:
     <h1>{{ .Values.custom.homepageText }}</h1>
     </body>
     </html>
-

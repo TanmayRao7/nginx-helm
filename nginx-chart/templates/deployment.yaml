@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nginx-chart.fullname" . }}
+  labels:
+    {{- include "nginx-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "nginx-chart.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "nginx-chart.name" . }}
+    spec:
+      containers:
+        - name: nginx
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: homepage-config
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+      volumes:
+        - name: homepage-config
+          configMap:
+            name: homepage-config
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+data:
+  index.html: |
+    <html>
+    <head><title>Home Page</title></head>
+    <body>
+    <h1>{{ .Values.custom.homepageText }}</h1>
+    </body>
+    </html>
+

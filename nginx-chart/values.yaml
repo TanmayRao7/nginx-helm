@@ -1,0 +1,30 @@
+# values.yaml
+
+replicaCount: 1
+
+image:
+  repository: nginx
+  tag: "1.19.0" # You can change this value to set a different image tag
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+
+resources: {}
+
+autoscaling:
+  enabled: false
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+custom:
+  homepageText: "Welcome to the Nginx Helm Chart!" # Custom text for homepage
+

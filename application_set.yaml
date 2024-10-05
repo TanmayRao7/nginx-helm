@@ -28,8 +28,8 @@ spec:
           homepageText: "Release Version"
   project: default
   syncPolicy:
-    automated:
-      prune: false
-      selfHeal: false
+    # automated:
+    #   prune: false
+    #   selfHeal: false
     syncOptions:
       - CreateNamespace=true

@@ -11,6 +11,7 @@ spec:
     path: nginx-chart/
     repoURL: https://github.com/TanmayRao7/nginx-helm.git
     targetRevision: master
+    namespace: dev
     helm:
       values: |
         replicaCount: 10

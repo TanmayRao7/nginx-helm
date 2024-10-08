@@ -13,7 +13,7 @@ spec:
     targetRevision: master
     helm:
       values: |
-        replicaCount: 10
+        replicaCount: 1
 
         image:
           repository: nginx

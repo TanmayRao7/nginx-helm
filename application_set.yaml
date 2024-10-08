@@ -25,7 +25,7 @@ spec:
           port: 80
 
         custom:
-          homepageText: "This is test release"
+          homepageText: "Release Version 18"
   project: default
   syncPolicy:
     # automated:

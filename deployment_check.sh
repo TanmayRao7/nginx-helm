@@ -44,6 +44,7 @@ while true; do
         echo "Application ${APP_NAME} is unhealthy with status: ${APP_HEALTH_STATUS}"
         print_app_logs  
         rollback_app  
+        echo "Application Deployment failed with Current Status: ${APP_SYNC_STATUS}"
         exit 1 
 
     else

@@ -17,7 +17,7 @@ spec:
 
         image:
           repository: nginx
-          tag: "1.18"
+          tag: "1.23452345"
           pullPolicy: IfNotPresent
 
         service:
@@ -25,7 +25,7 @@ spec:
           port: 80
 
         custom:
-          homepageText: "Release Version: 1.18"
+          homepageText: "Fail"
   project: default
   syncPolicy:
     # automated:

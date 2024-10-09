@@ -1,18 +1,54 @@
 #!/bin/bash
-DEPLOYMENT_NAME=$1
-KUBECTL="/opt/homebrew/bin/kubectl"
-${KUBECTL} events --for deployment/${DEPLOYMENT_NAME} -w &
-EVENTS_PID=$!
-while true
-do
-    ROLLOUT_STATUS=$(${KUBECTL} rollout status deployment/${DEPLOYMENT_NAME} | awk '{print $3}')
-    
-    if [ "${ROLLOUT_STATUS}" == "successfully" ]; then
-        echo "Deployment is successful"
-        kill $EVENTS_PID
-        break
-    else
-        echo "Waiting for deployment to complete..."
-        sleep 2
+APP_NAME=$1
+ARGOCD="/opt/homebrew/bin/argocd"
+TIMEOUT=120 
+
+get_health_status() {
+    echo "$(${ARGOCD} app get ${APP_NAME} | grep -i 'Health Status' | awk '{print $3}')"
+}
+
+get_sync_status() {
+    echo "$(${ARGOCD} app get ${APP_NAME} | grep -i 'Sync Status' | awk '{print $3}')"
+}
+
+print_app_logs() {
+    echo "Fetching logs for application ${APP_NAME}..."
+    ${ARGOCD} app logs ${APP_NAME}
+}
+
+rollback_app() {
+    echo "Rolling back ${APP_NAME} to the previous commit..."
+    ${ARGOCD} app rollback ${APP_NAME}
+}
+
+while true; do
+    APP_HEALTH_STATUS=$(get_health_status)
+    APP_SYNC_STATUS=$(get_sync_status)
+
+    if [ "${APP_SYNC_STATUS}" != "Synced" ]; then
+        echo "Application ${APP_NAME} is out of sync. Starting sync..."
+        ${ARGOCD} app sync ${APP_NAME}
     fi
+
+    echo "Waiting for application ${APP_NAME} to become healthy..."
+    ${ARGOCD} app wait ${APP_NAME} --health --timeout ${TIMEOUT}
+
+
+    APP_HEALTH_STATUS=$(get_health_status)
+    
+    if [ "${APP_HEALTH_STATUS}" == "Healthy" ]; then
+        echo "Application ${APP_NAME} is healthy."
+        break
+
+    elif [ "${APP_HEALTH_STATUS}" == "Degraded" ] || [ "${APP_HEALTH_STATUS}" != "Healthy" ]; then
+        echo "Application ${APP_NAME} is unhealthy with status: ${APP_HEALTH_STATUS}"
+        print_app_logs  
+        rollback_app  
+        exit 1 
+
+    else
+        echo "Application ${APP_NAME} is still not healthy. Health status: ${APP_HEALTH_STATUS}"
+    fi
+
+    sleep 10 
 done

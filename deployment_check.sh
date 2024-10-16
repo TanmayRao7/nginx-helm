@@ -27,7 +27,7 @@ while true; do
 
     if [ "${APP_SYNC_STATUS}" != "Synced" ]; then
         echo "Application ${APP_NAME} is out of sync. Starting sync..."
-        ${ARGOCD} app sync ${APP_NAME}
+        ${ARGOCD} app sync ${APP_NAME} -o tree=detailed
     fi
 
     echo "Waiting for application ${APP_NAME} to become healthy..."

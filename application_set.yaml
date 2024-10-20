@@ -25,7 +25,7 @@ spec:
           port: 80
 
         custom:
-          homepageText: "12313"
+          homepageText: "123123"
   project: default
   syncPolicy:
     # automated:

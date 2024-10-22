@@ -16,7 +16,8 @@ pipeline {
         
         stage('Modify Configuration') {
             steps {
-                sh '''./update_yaml.sh application_set.yaml "${params.IMAGE_TAG}" "${params.CUSTOM_TEXT}"'''
+                sh '''sed -i "" "s/tag: \\"[^\\"]*\\"/tag: \\"$IMAGE_TAG\\"/" application_set.yaml'''
+                sh '''sed -i "" "s/homepageText: \\"[^\\"]*\\"/homepageText: \\"$CUSTOM_TEXT\\"/" application_set.yaml'''
             }
         }
         

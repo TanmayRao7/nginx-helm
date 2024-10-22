@@ -30,7 +30,7 @@ pipeline {
         stage('Commit') {
             steps {
                 sh '/usr/bin/git add .'
-                sh '/usr/bin/git commit -m "Updated with ${params.IMAGE_TAG}"'
+                sh '/usr/bin/git commit -m "Updated with ${IMAGE_TAG}"'
                 sh '/usr/bin/git push --set-upstream origin master'
             }
         }

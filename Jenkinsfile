@@ -16,8 +16,10 @@ pipeline {
         
         stage('Modify Configuration') {
             steps {
-                sh '''sed -i "" "s/tag: \\"[^\\"]*\\"/tag: \\"$IMAGE_TAG\\"/" application_set.yaml'''
-                sh '''sed -i "" "s/homepageText: \\"[^\\"]*\\"/homepageText: \\"$CUSTOM_TEXT\\"/" application_set.yaml'''
+                // sh '''sed -i "" "s/tag: \\"[^\\"]*\\"/tag: \\"$IMAGE_TAG\\"/" application_set.yaml'''
+                // sh '''sed -i "" "s/homepageText: \\"[^\\"]*\\"/homepageText: \\"$CUSTOM_TEXT\\"/" application_set.yaml'''
+                sh ''' yq -i '.tag = ${IMAGE_TAG}' application_set.yaml '''
+                sh ''' yq -i '.homepageText = ${CUSTOM_TEXT}' application_set.yaml '''
             }
         }
         

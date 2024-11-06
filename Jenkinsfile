@@ -13,7 +13,6 @@ pipeline {
                 git branch: 'master', changelog: false, poll: false, url: 'https://github.com/TanmayRao7/nginx-helm.git'
                 sh '''git config --global user.email "raotanmay97@gmail.com" '''
                 sh '''git config --global user.name "TanmayRao7" '''
-                sh '''git remote add origin https://TanmayRao7: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@github.com/TanmayRao7/nginx-helm.git'''
             }
         }
         

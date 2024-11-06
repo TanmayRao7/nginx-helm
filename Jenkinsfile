@@ -11,8 +11,6 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 git branch: 'master', changelog: false, poll: false, url: 'https://github.com/TanmayRao7/nginx-helm.git'
-                sh '''git config --global user.email "raotanmay97@gmail.com" '''
-                sh '''git config --global user.name "TanmayRao7" '''
             }
         }
         
@@ -38,6 +36,8 @@ pipeline {
         stage('Commit') {
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'git-new', gitToolName: 'Default')]) {
+                    git config --global user.name "${GIT_USERNAME}"
+                    git config --global user.password "${GIT_PASSWORD}"
                     sh 'git add .'
                     sh 'git commit -m "Updated with ${IMAGE_TAG}"'
                     sh 'git push --set-upstream origin master'   

@@ -18,7 +18,9 @@ pipeline {
             steps {
                 sh '''sed -i "" "s/tag: \\"[^\\"]*\\"/tag: \\"$IMAGE_TAG\\"/" application_set.yaml'''
                 sh '''sed -i "" "s/homepageText: \\"[^\\"]*\\"/homepageText: \\"$CUSTOM_TEXT\\"/" application_set.yaml'''
-                // sh ''' /opt/homebrew/bin/yq -i '.tag = env.IMAGE_TAG' application_set.yaml '''
+                // sh '''sed -i "" "s/tag: \\"[^\\"]*\\"/tag: \\"$IMAGE_TAG\\"/" application_set.yaml'''
+                // sh '''sed -i "" "s/homepageText: \\"[^\\"]*\\"/homepageText: \\"$CUSTOM_TEXT\\"/" application_set.yaml'''
+                // // sh ''' /opt/homebrew/bin/yq -i '.tag = env.IMAGE_TAG' application_set.yaml '''
                 // sh ''' /opt/homebrew/bin/yq -i '.homepageText = env.CUSTOM_TEXT' application_set.yaml '''
             }
         }

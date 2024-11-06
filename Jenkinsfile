@@ -36,8 +36,8 @@ pipeline {
         stage('Commit') {
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'git-new', gitToolName: 'Default')]) {
-                    git config --global user.name "${GIT_USERNAME}"
-                    git config --global user.password "${GIT_PASSWORD}"
+                    sh 'git config --global user.name "${GIT_USERNAME}"'
+                    sh 'git config --global user.password "${GIT_PASSWORD}"'
                     sh 'git add .'
                     sh 'git commit -m "Updated with ${IMAGE_TAG}"'
                     sh 'git push --set-upstream origin master'   

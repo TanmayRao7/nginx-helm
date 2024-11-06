@@ -45,11 +45,11 @@ pipeline {
             }
         }
         
-        stage('Deploy') {
-            steps {
-                sh '/opt/homebrew/bin/kubectl apply -f application_set.yaml'
-            }
-        }
+        // stage('Deploy') {
+        //     steps {
+        //         sh '/opt/homebrew/bin/kubectl apply -f application_set.yaml'
+        //     }
+        // }
         
         stage('Sync') {
             steps {

@@ -51,11 +51,11 @@ pipeline {
         //     }
         // }
         
-        stage('Sync') {
-            steps {
-                sh '/bin/sh deployment_check.sh nginx'
-            }
-        }
+        // stage('Sync') {
+        //     steps {
+        //         sh '/bin/sh deployment_check.sh nginx'
+        //     }
+        // }
 
         stage('Deploy to Dev') {
             when {

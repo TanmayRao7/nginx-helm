@@ -37,9 +37,11 @@ pipeline {
         
         stage('Commit') {
             steps {
-                sh '/usr/bin/git add .'
-                sh '/usr/bin/git commit -m "Updated with ${IMAGE_TAG}"'
-                sh '/usr/bin/git push --set-upstream origin master'
+                withCredentials([gitUsernamePassword(credentialsId: 'git-new', gitToolName: 'Default')]) {
+                    sh 'git add .'
+                    sh 'git commit -m "Updated with ${IMAGE_TAG}"'
+                    sh 'git push --set-upstream origin master'   
+                }
             }
         }
         

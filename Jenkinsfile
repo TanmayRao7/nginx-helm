@@ -11,8 +11,8 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 git branch: 'master', changelog: false, poll: false, url: 'https://github.com/TanmayRao7/nginx-helm.git'
-                git config --global user.email "raotanmay97@gmail.com"
-                git config --global user.name "TanmayRao7"
+                sh '''git config --global user.email "raotanmay97@gmail.com" '''
+                sh '''git config --global user.name "TanmayRao7" '''
             }
         }
         

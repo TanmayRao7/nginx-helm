@@ -12,20 +12,8 @@ spec:
     repoURL: https://github.com/TanmayRao7/nginx-helm.git
     targetRevision: master
     helm:
-      values: |
-        replicaCount: 1
-
-        image:
-          repository: nginx
-          tag: "1.18"
-          pullPolicy: IfNotPresent
-
-        service:
-          type: ClusterIP
-          port: 80
-
-        custom:
-          homepageText: "Release Version: 1.18"
+      values:
+      - values.yaml
   project: default
   syncPolicy:
     automated:

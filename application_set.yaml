@@ -12,7 +12,7 @@ spec:
     repoURL: https://github.com/TanmayRao7/nginx-helm.git
     targetRevision: master
     helm:
-      values:
+      valueFiles:
       - values.yaml
   project: default
   syncPolicy:
@@ -21,3 +21,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true

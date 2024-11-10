@@ -26,5 +26,5 @@ tolerations: []
 affinity: {}
 
 custom:
-  homepageText: "Welcome to the Nginx Helm Chart!" # Custom text for homepage
+  homepageText: "Release Version: 1.18"
 

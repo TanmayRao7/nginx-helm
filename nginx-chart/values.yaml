@@ -4,7 +4,7 @@ replicaCount: 1
 
 image:
   repository: nginx
-  tag: "1.18.0" # You can change this value to set a different image tag
+  tag: "1.17.0" # You can change this value to set a different image tag
   pullPolicy: IfNotPresent
 
 service:
@@ -26,5 +26,5 @@ tolerations: []
 affinity: {}
 
 custom:
-  homepageText: "Release Version: 1.18"
+  homepageText: "Release Version: 1.17"
 

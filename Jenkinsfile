@@ -16,16 +16,10 @@ pipeline {
         
         stage('Modify Configuration') {
             steps {
-                // sh '''sed -i "s/tag: \\"[^\\"]*\\"/tag: \\"$IMAGE_TAG\\"/" nginx-helm/values.yaml '''
-                // sh '''sed -i "s/homepageText: \\"[^\\"]*\\"/homepageText: \\"$CUSTOM_TEXT\\"/" nginx-helm/values.yaml '''
-                sh '''sed -i "s/tag: \\"[^\\"]*\\"/tag: \\"$IMAGE_TAG\\"/" application_set.yaml'''
-                sh '''sed -i "s/homepageText: \\"[^\\"]*\\"/homepageText: \\"$CUSTOM_TEXT\\"/" application_set.yaml'''
-                // sh '''sed -i "" "s/tag: \\"[^\\"]*\\"/tag: \\"$IMAGE_TAG\\"/" application_set.yaml'''
-                // sh '''sed -i "" "s/homepageText: \\"[^\\"]*\\"/homepageText: \\"$CUSTOM_TEXT\\"/" application_set.yaml'''
-                // sh '''sed -i "" "s/tag: \\"[^\\"]*\\"/tag: \\"$IMAGE_TAG\\"/" application_set.yaml'''
-                // sh '''sed -i "" "s/homepageText: \\"[^\\"]*\\"/homepageText: \\"$CUSTOM_TEXT\\"/" application_set.yaml'''
-                // // sh ''' /opt/homebrew/bin/yq -i '.tag = env.IMAGE_TAG' application_set.yaml '''
-                // sh ''' /opt/homebrew/bin/yq -i '.homepageText = env.CUSTOM_TEXT' application_set.yaml '''
+                sh """
+                    yq -i '.image.tag = "${IMAGE_TAG}"' nginx-chart/values.yaml 
+                    yq -i '.custom.homepageText = "${CUSTOM_TEXT}"' nginx-chart/values.yaml
+                """
             }
         }
         
@@ -47,9 +41,22 @@ pipeline {
             }
         }
         
-        // stage('Deploy') {
+        stage('Deploy') {
+            steps {
+                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig-kind', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+                    sh 'kubectl apply -f application_set.yaml'
+                }
+            }
+        }
+        
+        // stage('Argocd Login') {
         //     steps {
-        //         sh '/opt/homebrew/bin/kubectl apply -f application_set.yaml'
+        //         withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig-kind', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+        //             sh ''' ARGOCD_PASS="$(kubectl -n argocd  get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d)" 
+        //                   argocd login argocd-server.argocd.svc.cluster.local --username='admin' --password='$ARGOCD_PASS' --skip-test-tls --insecure
+        //                   argocd app list
+        //             '''
+        //         }
         //     }
         // }
         

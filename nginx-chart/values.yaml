@@ -3,7 +3,7 @@
 replicaCount: 1
 image:
   repository: nginx
-  tag: "${IMAGE_TAG}" # You can change this value to set a different image tag
+  tag: "1.14" # You can change this value to set a different image tag
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
@@ -17,4 +17,4 @@ nodeSelector: {}
 tolerations: []
 affinity: {}
 custom:
-  homepageText: "${CUSTOM_TEXT}"
+  homepageText: "1.14"

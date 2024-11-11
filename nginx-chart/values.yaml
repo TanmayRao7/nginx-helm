@@ -1,30 +1,20 @@
 # values.yaml
 
 replicaCount: 1
-
 image:
   repository: nginx
-  tag: "1.17.0" # You can change this value to set a different image tag
+  tag: "${IMAGE_TAG}" # You can change this value to set a different image tag
   pullPolicy: IfNotPresent
-
 service:
   type: ClusterIP
   port: 80
-
 ingress:
   enabled: false
-
 resources: {}
-
 autoscaling:
   enabled: false
-
 nodeSelector: {}
-
 tolerations: []
-
 affinity: {}
-
 custom:
-  homepageText: "Release Version: 1.17"
-
+  homepageText: "${CUSTOM_TEXT}"

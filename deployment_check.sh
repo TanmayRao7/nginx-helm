@@ -1,6 +1,6 @@
 #!/bin/bash
 APP_NAME=$1
-ARGOCD="${whereis argocd}"
+ARGOCD="/usr/local/bin/argocd"
 echo ${ARGOCD}
 TIMEOUT=120 
 

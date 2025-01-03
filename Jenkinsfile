@@ -49,16 +49,16 @@ pipeline {
             }
         }
         
-        stage('Argocd Login') {
-            steps {
-                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig-kind', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
-                    sh ''' ARGOCD_PASS="$(kubectl -n argocd  get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d)" 
-                          argocd login argocd-server.argocd.svc.cluster.local --username='admin' --password='$ARGOCD_PASS' --skip-test-tls --insecure
-                          argocd app list
-                    '''
-                }
-            }
-        }
+        // stage('Argocd Login') {
+        //     steps {
+        //         withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubeconfig-kind', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+        //             sh ''' ARGOCD_PASS="$(kubectl -n argocd  get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d)" 
+        //                   argocd login argocd-server.argocd.svc.cluster.local --username='admin' --password='$ARGOCD_PASS' --skip-test-tls --insecure
+        //                   argocd app list
+        //             '''
+        //         }
+        //     }
+        // }
         
         stage('Sync') {
             steps {

@@ -62,7 +62,8 @@ pipeline {
         
         stage('Sync') {
             steps {
-                sh '/bin/sh argocd app sync nginx'
+                sh '/bin/sh argocd app sync nginx -o tree=detailed'
+                sh '/bin/sh argocd app wait nginx --health --timeout 120'
             }
         }
 

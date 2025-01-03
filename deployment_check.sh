@@ -1,6 +1,7 @@
 #!/bin/bash
 APP_NAME=$1
-ARGOCD="/opt/homebrew/bin/argocd"
+ARGOCD="${whereis argocd}"
+echo ${ARGOCD}
 TIMEOUT=120 
 
 get_health_status() {

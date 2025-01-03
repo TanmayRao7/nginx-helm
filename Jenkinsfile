@@ -62,7 +62,7 @@ pipeline {
         
         stage('Sync') {
             steps {
-                sh '/bin/sh deployment_check.sh nginx'
+                sh '/bin/sh argocd app sync nginx'
             }
         }
 

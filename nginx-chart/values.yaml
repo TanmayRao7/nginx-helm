@@ -3,7 +3,7 @@
 replicaCount: 1
 image:
   repository: nginx
-  tag: "1.17" # You can change this value to set a different image tag
+  tag: "1.18" # You can change this value to set a different image tag
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
